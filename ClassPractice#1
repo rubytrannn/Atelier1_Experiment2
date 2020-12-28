@@ -1,0 +1,59 @@
+//Course practive. Sol LeWitt's #95
+//class tutorial Atelier 1 2020
+//divided vertically into fifteen equal parts, vertical lines, (not) straight, using four colours in all one-, two-, three-, four- part combinations
+
+let palette = [
+  
+  ["#51C7D4"],
+  ["#089AAA","#14464B","red"],
+  ["#28AFBE","#30676D","red"],
+  ["#51C7D4","#477A80","red"],
+  ["#71D7E2","#618A8F"],
+  ["#9EEAF2","#98ACAE"],
+  ["#B7F3F9","#BAC3C4"],
+  ["#E1FCFF","#D5DFE0"],
+  ["#E7F9F8","#FFFFFF"],
+  
+  ["#FFFFFF","#E7F9F8"],
+  ["#D5DFE0","#E1FCFF",],
+  ["#BAC3C4","#B7F3F9",],
+  ["#98ACAE","#9EEAF2",],
+  ["#618A8F","#71D7E2",],
+  ["red","#477A80","#51C7D4",],
+  ["red","#30676D","#28AFBE",],
+  ["red","#14464B","#089AAA",],
+  ["#51C7D4"],
+  
+
+];
+
+function setup() {
+  canvas = createCanvas(windowWidth, windowHeight);
+  background(0,0,0);
+  
+
+  let num = 18; //grid number
+  let num1 = 18;
+  let spanx = width/num; //number of collumns displayed in the 
+  let spanx1 = spanx/num1;
+  
+  for (let i = 0; i<num; i++){
+    // line(i*spanx, 0, i*spanx, height) //p1.x, p1.y, p2.x, p2.y
+    let colors = palette[i];
+    
+    for (let j = 0; j<num1; j++){ //lines inside
+      
+      stroke(colors[j%colors.length]);
+      
+      // line((i*spanx)+(j*spanx1), 0, (i*spanx)+(j*spanx1), height);
+      
+      line((i*spanx)+(j*spanx1), 0, (j*spanx)+(i*spanx1), height);
+      
+      line((j*spanx)+(i*spanx1), 0, (i*spanx)+(j*spanx1), height);
+      
+
+      // apply the same to every collumn
+    }
+    
+  }
+}
