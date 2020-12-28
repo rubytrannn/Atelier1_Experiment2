@@ -34,7 +34,7 @@ function setup() {
 
   let num = 18; //grid number
   let num1 = 18;
-  let spanx = width/num; //number of collumns displayed in the 
+  let spanx = width/num; //number of columns displayed in the 
   let spanx1 = spanx/num1;
   
   for (let i = 0; i<num; i++){
@@ -52,7 +52,7 @@ function setup() {
       line((j*spanx)+(i*spanx1), 0, (i*spanx)+(j*spanx1), height);
       
 
-      // apply the same to every collumn
+      // apply the same to every column
     }
     
   }
