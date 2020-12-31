@@ -1,0 +1,101 @@
+// If the current state is 1 ("alive"):
+// If the neighbor total is less than 2: New state is 0 ("death by loneliness")
+// Else if the neighbor total is greater than 3: New state is 0 ("death by overcrowding")
+// Else: State remains the same ("alive")
+// If the current state is 0 ("dead"):
+// If the neigbor total is exactly 3: New state is 1 ("reproduction")
+// Else: State remains the same ("dead")
+
+
+//the modified version of class practice
+
+let s = 20; //pixel size
+let c,r; //column and row
+let cells = []; //an array of rectangles 
+
+function setup(){
+  canvas = createCanvas(windowWidth, windowHeight);
+  background(255);
+  noStroke(); //no grid on canvas
+  stroke(random(10)); // blocks colour
+
+  frameRate(8);
+  
+  c = floor(width/s); //integer column number
+  r = floor(height/s); //integer row number
+//celular space
+  
+  for (let i=0; i<c; i++){
+    cells[i] = [];
+    
+    for (let j=0; j<r; j++){
+      let state = floor(random(2)); // either 0 or 1
+      fill(state *225);
+      rect(i*s, j*s, s, s); //draw rectangle
+      cells[i][j] = state; //pass old info into the next one //initial condition
+      
+    }//for j
+  }//for i
+  
+}//setup
+
+function draw(){
+  //update values
+  
+  let newcells = [];
+ 
+  for (let i=0; i<c; i++){
+    newcells[i] = [];
+    for (let j=0; j<r; j++){
+      //boundary conditions
+      if (i==0 || i==c-1 || j==0 || j==r-1){
+        newcells[i][j] = floor(random(2));
+      } else {
+        let e = cells[i+1][j]; //coordinates of new points comparing to the main center one
+        let n = cells[i][j-1];
+        let w = cells[i-1][j];
+        let s = cells[i][j+1];
+        let ne = cells[i+1][j-1];
+        let nw = cells[i-1][j-1];
+        let se = cells[i+1][j+1];
+        let sw = cells[i-1][j+1];
+        let sum = e+n+w+s+ne+nw+se+sw; //number of neighbors
+        
+        if(cells[i][j])
+        {
+          if (sum <2 || sum>3){
+            newcells[i][j] = 0; //new one (neighbor) is dead
+          } else{
+            newcells[i][j] = 1; //new one (neighbor) is alive
+          }
+        } else
+        {
+          if (sum ==3){
+            newcells[i][j] = 1;
+          } else{
+            newcells[i][j] = 0;
+          }
+        }
+        
+      }// for else
+    }//for j
+  }// for i
+  
+  cells = newcells; //switch old status to new status; state transition
+  
+  //draw the result
+  for (let i=0; i<c; i++){
+    for (let j=0; j<r; j++){  
+      let state = cells[i][j];
+      fill(state*random(0,255));
+      
+      // arc(i*s,j*s,s,s,10,PI); //draw arcs instead of rectangles
+      
+      ellipse(i*s,j*s,s,s); //draw ellipses
+      
+    }//for i
+  }// for j
+    
+  
+    
+}
