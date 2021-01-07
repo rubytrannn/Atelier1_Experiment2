@@ -1,0 +1,55 @@
+//Atelier 1 - Experiment 2.3
+//Ruby Tran (3177952)
+
+
+let gap = 10;
+let cirNum = 10;
+let cirSize = 20;
+let angle = 50;
+
+
+function setup(){
+  createCanvas(600, 600,WEBGL); //turn on WebGL mode to have more flexibility in rotate x-axis in the shapes
+  angleMode(degrees);
+}
+
+
+function draw(){
+  background("black");
+  frameRate(2);
+   
+  
+  for (var k =0; k <50; k++){ //generate randomized colours
+    
+    var r = map(sin(frameCount/5), -2, 2, 100, 200);
+    var g = map(k, 0, 50, 100, 200);
+    var b = map(cos(frameCount/5), -2, 2, 100, 200);
+    
+    stroke(r,g,b);
+    rotate(frameCount/3);
+  
+  //custom shape
+  noCursor();
+  fill("white");
+  circle(mouseX,mouseY,5); //draw to the canvas whenever mouse hovers 
+  //if mouse moves to the right, the sequence will rotate to the right, same as the left, but if mouse not hovering, no direction of new sequence is found
+  
+  
+  //main graph
+  push();
+  translate(width/2,height/2);
+  rotate(angle);
+  angle = angle +1; 
+  noFill();
+  strokeWeight(1);
+  
+  for(let i=0; i<cirNum; i++){
+    for (let y=0; y<10; y++){
+      rotateX(random(0,360)); //the axes of the arcs are rotated randomly in the x-axis
+      arc(cirSize+gap*i*2, cirSize+gap*i/2,cirSize+gap*i, cirSize+gap*i,angle*i,360-i);
+    }
+
+  }
+  pop(); 
+}
+}
